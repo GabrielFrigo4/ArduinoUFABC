@@ -21,17 +21,17 @@ void initSensor(Sensor &sensor){
 
 void initRadio(int mode){
   radio.begin();
-  if(init == INIT_RADIO_READ){
+  if(init == RADIO_READ){
     radio.openReadingPipe(0, address);
   }
-  else if(init == INIT_RADIO_WRITE){
+  else if(init == RADIO_WRITE){
     radio.openWritingPipe(address);
   }  
   radio.setPALevel(RF24_PA_MIN);
   if(init == INIT_RADIO_READ){
     radio.startListening();
   }
-  else if(init == INIT_RADIO_WRITE){
+  else if(init == RADIO_WRITE){
     radio.stopListening(); 
   }  
 }
