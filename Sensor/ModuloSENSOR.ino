@@ -28,16 +28,14 @@ int analogSoloMolhado = 150; //VALOR MEDIDO COM O SOLO MOLHADO (VOCÊ PODE FAZER
 int percSoloSeco = 0; //MENOR PERCENTUAL DO SOLO SECO (0% - NÃO ALTERAR)
 int percSoloMolhado = 100; //MAIOR PERCENTUAL DO SOLO MOLHADO (100% - NÃO ALTERAR)
 
+/* FUNC */
+void initSensor();
+void initRadio();
+
 /* CODE */
 void setup(){
-  Serial.begin(9600); //INICIALIZA A SERIAL
-  Serial.println("Lendo a umidade do solo..."); //IMPRIME O TEXTO NO MONITOR SERIAL
-  delay(2000); //INTERVALO DE 2 SEGUNDOS
-
-  radio.begin();
-  radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MIN);
-  radio.stopListening();
+  initSensor();
+  initRadio();
 }
 
 void loop(){
@@ -51,4 +49,17 @@ void loop(){
   Serial.print(valorLido); //IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
   Serial.println("%"); //IMPRIME O CARACTERE NO MONITOR SERIAL
   delay(1000);  //INTERVALO DE 1 SEGUNDO
+}
+
+void initSensor(){
+  Serial.begin(9600); //INICIALIZA A SERIAL
+  Serial.println("Lendo a umidade do solo..."); //IMPRIME O TEXTO NO MONITOR SERIAL
+  delay(2000); //INTERVALO DE 2 SEGUNDOS
+}
+
+void initRadio(){
+  radio.begin();
+  radio.openWritingPipe(address);
+  radio.setPALevel(RF24_PA_MIN);
+  radio.stopListening();
 }
