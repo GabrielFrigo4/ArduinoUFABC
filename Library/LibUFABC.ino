@@ -28,7 +28,7 @@ void initRadio(int mode){
     radio.openWritingPipe(address);
   }  
   radio.setPALevel(RF24_PA_MIN);
-  if(init == INIT_RADIO_READ){
+  if(init == RADIO_READ){
     radio.startListening();
   }
   else if(init == RADIO_WRITE){
@@ -41,10 +41,10 @@ void updateWifi(){
 }
 
 void updateSensor(Sensor &senso){
-  valorLido = constrain(analogRead(pinoSensor),analogSoloMolhado,analogSoloSeco); //MANTÉM valorLido DENTRO DO INTERVALO (ENTRE analogSoloMolhado E analogSoloSeco)
-  valorLido = map(valorLido,analogSoloMolhado,analogSoloSeco,percSoloMolhado,percSoloSeco); //EXECUTA A FUNÇÃO "map" DE ACORDO COM OS PARÂMETROS PASSADOS
+  senso.valorLido = constrain(analogRead(senso.pinoSensor),senso.analogSoloMolhado,senso.analogSoloSeco); //MANTÉM valorLido DENTRO DO INTERVALO (ENTRE analogSoloMolhado E analogSoloSeco)
+  senso.valorLido = map(senso.valorLido,senso.analogSoloMolhado,senso.analogSoloSeco,senso.percSoloMolhado,senso.percSoloSeco); //EXECUTA A FUNÇÃO "map" DE ACORDO COM OS PARÂMETROS PASSADOS
   Serial.print("Umidade do solo: "); //IMPRIME O TEXTO NO MONITOR SERIAL
-  Serial.print(valorLido); //IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
+  Serial.print(senso.valorLido); //IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
   Serial.println("%"); //IMPRIME O CARACTERE NO MONITOR SERIAL
   delay(1000);  //INTERVALO DE 1 SEGUNDO
 }
