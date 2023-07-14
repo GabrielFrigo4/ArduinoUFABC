@@ -19,11 +19,12 @@ Sensor sensor;
 
 /* CODE */
 void setup(){
+  initSystem();
   initSensor(&sensor);
-  initRadio();
+  initRadio(RADIO_WRITE);
 }
 
 void loop(){
   updateSensor(&sensor);
-  updateRadio();
+  updateRadio(RADIO_WRITE);
 }
