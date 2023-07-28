@@ -11,39 +11,57 @@ https://howtomechatronics.com/tutorials/arduino/arduino-wireless-communication-n
 https://docs.arduino.cc/learn/contributions/arduino-creating-library-guide
 ======================================================================================================================================= */
 
-/* INCLUDE */
+/*
 #include "LibUFABC.h"
+#include "SensorHumidade.h"
 
-/* DATA */
-Sensor sensor;
+Sensor sensor = {};
 
-const int pinoSensor = A0; //PINO UTILIZADO PELO SENSOR
-int valorLido; //VARIÁVEL QUE ARMAZENA O PERCENTUAL DE UMIDADE DO SOLO
- 
-int analogSoloSeco = 623; //VALOR MEDIDO COM O SOLO SECO (VOCÊ PODE FAZER TESTES E AJUSTAR ESTE VALOR)
-int analogSoloMolhado = 340; //VALOR MEDIDO COM O SOLO MOLHADO (VOCÊ PODE FAZER TESTES E AJUSTAR ESTE VALOR)
-int percSoloSeco = 0; //MENOR PERCENTUAL DO SOLO SECO (0% - NÃO ALTERAR)
-int percSoloMolhado = 100; //MAIOR PERCENTUAL DO SOLO MOLHADO (100% - NÃO ALTERAR)
-
-/* CODE */
 void setup(){
   initSystem();
-  initSensor(&sensor);
+  initSensor(sensor);
   initRadio(RADIO_WRITE);
-
-  Serial.begin(9600); //INICIALIZA A SERIAL
   Serial.println("Lendo a umidade do solo..."); //IMPRIME O TEXTO NO MONITOR SERIAL
   delay(2000); //INTERVALO DE 2 SEGUNDOS
 }
 
 void loop(){
-  updateSensor(&sensor);
+  updateSensor(sensor);
   updateRadio(RADIO_WRITE);
 
-  valorLido = constrain(analogRead(pinoSensor),analogSoloMolhado,analogSoloSeco); //MANTÉM valorLido DENTRO DO INTERVALO (ENTRE analogSoloMolhado E analogSoloSeco)
-  valorLido = map(valorLido,analogSoloMolhado,analogSoloSeco,percSoloMolhado,percSoloSeco); //EXECUTA A FUNÇÃO "map" DE ACORDO COM OS PARÂMETROS PASSADOS
   Serial.print("Umidade do solo: "); //IMPRIME O TEXTO NO MONITOR SERIAL
-  Serial.print(valorLido); //IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
+  Serial.print(sensor.valorLido); //IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
   Serial.println("%"); //IMPRIME O CARACTERE NO MONITOR SERIAL
   delay(100); 
+}
+*/
+
+#include <SPI.h> //INCLUSÃO DE BIBLIOTECA
+#include <nRF24L01.h> //INCLUSÃO DE BIBLIOTECA
+#include <RF24.h> //INCLUSÃO DE BIBLIOTECA
+
+RF24 _radio(7, 8); //CRIA UMA INSTÂNCIA UTILIZANDO OS PINOS (CE, CSN)
+
+const byte _address[6] = "00002"; //CRIA UM ENDEREÇO PARA ENVIO DOS
+//DADOS (O TRANSMISSOR E O RECEPTOR DEVEM SER CONFIGURADOS COM O MESMO ENDEREÇO)
+
+void setup() {
+   Serial.begin(9600); //INICIALIZA A SERIAL
+  _radio.begin();
+  _radio.setChannel(100);
+  _radio.setPALevel(RF24_PA_MIN);
+  _radio.setDataRate(RF24_250KBPS);
+  _radio.setAutoAck(false);
+  _radio.openWritingPipe(_address[0]);
+  Serial.println("START!!!!!!!!");
+}
+
+void loop() {
+  const char text[] = "MasterWalker Shop"; //VARIÁVEL RECEBE A MENSAGEM A SER TRANSMITIDA
+  if(_radio.write(&text, sizeof(text)) == true){
+    Serial.println("write ok");
+  } else {
+    Serial.println("write failed");
+  }
+  delay(1000); //INTERVALO DE 1 SEGUNDO
 }
