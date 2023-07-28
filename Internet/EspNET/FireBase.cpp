@@ -4,8 +4,6 @@
 #include "addons/TokenHelper.h"
 #include "addons/RTDBHelper.h"
 
-unsigned long count = 0;
-
 // Define Firebase data object
 FirebaseData fbdo;
 FirebaseAuth auth;
@@ -27,7 +25,7 @@ void FireBase_Init(const char* wifi_ssid, const char* wifi_password) {
   Serial.println("\nConnected to Wi-Fi!");
 
   // Initialize Firebase
-  if (Firebase.signUp(&config, &auth, "", "")){
+  if (Firebase.signUp(&config, &auth, "", "") == true){
     Serial.println("ok");
   }
   else{
@@ -39,11 +37,10 @@ void FireBase_Init(const char* wifi_ssid, const char* wifi_password) {
 }
 
 void FireBase_SetInt(const char* path, int value){
-  if (Firebase.RTDB.setInt(&fbdo, path, value)) {
+  if (Firebase.RTDB.setInt(&fbdo, path, value) == true) {
     Serial.println("PASSED");
     Serial.println("PATH: " + fbdo.dataPath());
     Serial.println("TYPE: " + fbdo.dataType());
-    count++;
   }
   else {
     Serial.println("FAILED");
