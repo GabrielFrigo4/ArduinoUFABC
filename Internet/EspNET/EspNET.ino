@@ -1,5 +1,9 @@
 /* =======================================================================================================================================
 https://www.robocore.net/tutoriais/programando-o-esp8266-pela-arduino-ide
+https://blog.zerokol.com/2018/08/nrf24l01-com-nodemcu.html
+https://howtomechatronics.com/tutorials/arduino/arduino-wireless-communication-nrf24l01-tutorial/
+https://forum.arduino.cc/t/nrf24l01-not-working-solved/697425
+https://forum.arduino.cc/t/simple-nrf24l01-2-4ghz-transceiver-demo/405123
 ======================================================================================================================================= */
 
 /*
