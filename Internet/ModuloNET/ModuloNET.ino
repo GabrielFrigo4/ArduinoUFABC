@@ -5,13 +5,15 @@
 #include "LibUFABC.h"
 
 /* CODE */
-void setup(){
+void setup()
+{
   initSystem();
   initWifi();
   initRadio(RADIO_READ);
 }
 
-void loop(){
+void loop()
+{
   updateWifi();
   updateRadio(RADIO_READ);
 }

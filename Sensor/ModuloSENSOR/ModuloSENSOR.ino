@@ -32,21 +32,22 @@ void loop(){
   Serial.print("Umidade do solo: "); //IMPRIME O TEXTO NO MONITOR SERIAL
   Serial.print(sensor.valorLido); //IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
   Serial.println("%"); //IMPRIME O CARACTERE NO MONITOR SERIAL
-  delay(100); 
+  delay(100);
 }
 */
 
-#include <SPI.h> //INCLUSÃO DE BIBLIOTECA
+#include <SPI.h>      //INCLUSÃO DE BIBLIOTECA
 #include <nRF24L01.h> //INCLUSÃO DE BIBLIOTECA
-#include <RF24.h> //INCLUSÃO DE BIBLIOTECA
+#include <RF24.h>     //INCLUSÃO DE BIBLIOTECA
 
-RF24 _radio(7, 8); //CRIA UMA INSTÂNCIA UTILIZANDO OS PINOS (CE, CSN)
+RF24 _radio(7, 8); // CRIA UMA INSTÂNCIA UTILIZANDO OS PINOS (CE, CSN)
 
-const byte _address[6] = "00002"; //CRIA UM ENDEREÇO PARA ENVIO DOS
-//DADOS (O TRANSMISSOR E O RECEPTOR DEVEM SER CONFIGURADOS COM O MESMO ENDEREÇO)
+const byte _address[6] = "00002"; // CRIA UM ENDEREÇO PARA ENVIO DOS
+// DADOS (O TRANSMISSOR E O RECEPTOR DEVEM SER CONFIGURADOS COM O MESMO ENDEREÇO)
 
-void setup() {
-   Serial.begin(9600); //INICIALIZA A SERIAL
+void setup()
+{
+  Serial.begin(9600); // INICIALIZA A SERIAL
   _radio.begin();
   _radio.setChannel(100);
   _radio.setPALevel(RF24_PA_MIN);
@@ -56,12 +57,16 @@ void setup() {
   Serial.println("START!!!!!!!!");
 }
 
-void loop() {
-  const char text[] = "MasterWalker Shop"; //VARIÁVEL RECEBE A MENSAGEM A SER TRANSMITIDA
-  if(_radio.write(&text, sizeof(text)) == true){
+void loop()
+{
+  const char text[] = "MasterWalker Shop"; // VARIÁVEL RECEBE A MENSAGEM A SER TRANSMITIDA
+  if (_radio.write(&text, sizeof(text)) == true)
+  {
     Serial.println("write ok");
-  } else {
+  }
+  else
+  {
     Serial.println("write failed");
   }
-  delay(1000); //INTERVALO DE 1 SEGUNDO
+  delay(1000); // INTERVALO DE 1 SEGUNDO
 }

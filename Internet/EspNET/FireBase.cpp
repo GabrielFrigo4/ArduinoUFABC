@@ -9,7 +9,8 @@ FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
 
-void FireBase_Init(const char* wifi_ssid, const char* wifi_password) {
+void FireBase_Init(const char *wifi_ssid, const char *wifi_password)
+{
   Serial.begin(9600);
   // Firebase auth data
   config.api_key = API_KEY;
@@ -18,17 +19,20 @@ void FireBase_Init(const char* wifi_ssid, const char* wifi_password) {
   // Connect to Wi-Fi
   WiFi.begin(wifi_ssid, wifi_password);
   Serial.print("Connecting to Wi-Fi...");
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(500);
     Serial.print(".");
   }
   Serial.println("\nConnected to Wi-Fi!");
 
   // Initialize Firebase
-  if (Firebase.signUp(&config, &auth, "", "") == true){
+  if (Firebase.signUp(&config, &auth, "", "") == true)
+  {
     Serial.println("ok");
   }
-  else{
+  else
+  {
     Serial.printf("%s\n", config.signer.signupError.message.c_str());
   }
 
@@ -36,13 +40,16 @@ void FireBase_Init(const char* wifi_ssid, const char* wifi_password) {
   Firebase.reconnectWiFi(true);
 }
 
-void FireBase_SetInt(const char* path, int value){
-  if (Firebase.RTDB.setInt(&fbdo, path, value) == true) {
+void FireBase_SetInt(const char *path, int value)
+{
+  if (Firebase.RTDB.setInt(&fbdo, path, value) == true)
+  {
     Serial.println("PASSED");
     Serial.println("PATH: " + fbdo.dataPath());
     Serial.println("TYPE: " + fbdo.dataType());
   }
-  else {
+  else
+  {
     Serial.println("FAILED");
     Serial.println("REASON: " + fbdo.errorReason());
   }
