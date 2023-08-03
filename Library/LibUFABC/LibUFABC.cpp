@@ -1,5 +1,7 @@
 /* INCLUDE */
 #include "LibUFABC.h"
+#define CHANNEL 0xFC
+#define ADDRESS 0xFABC0BABACA0FEDE
 
 /* DATA */
 #if ESP8266
@@ -7,9 +9,15 @@ RF24 radio(1, 2); // CE, CSN
 #else
 RF24 radio(7, 8); // CE, CSN
 #endif
-const ubyte address[6] = "00001";
-const ubyte radio_buffer[64] = {0};
-const int radio_buffer_lenght = 64;
+
+#if BUFFER_SIZE
+ubyte radio_buffer[BUFFER_SIZE] = {0};
+int radio_buffer_lenght = BUFFER_SIZE;
+#else
+ubyte radio_buffer[32] = {0};
+const int radio_buffer_lenght = 32;
+#endif
+const uint64_t address = ADDRESS;
 
 /* CODE */
 void initSystem()
@@ -34,7 +42,9 @@ void initRadio(int mode)
   {
     radio.openWritingPipe(address);
   }
+  radio.setChannel(CHANNEL);
   radio.setPALevel(RF24_PA_MIN);
+  radio.setDataRate(RF24_250KBPS);
   if (mode == RADIO_READ)
   {
     radio.startListening();
@@ -49,35 +59,17 @@ void updateRadio(int mode)
 {
   if (mode == RADIO_WRITE)
   {
-    // const char text[] = "Hello World";
-    if (radio.write(radio_buffer_size, radio_buffer_size) == true)
-    {
-      Serial.println("write ok");
-    }
-    else
-    {
-      Serial.println("write failed");
-    }
-    delay(1000);
+    radio.write(radio_buffer, radio_buffer_lenght);
   }
 
   if (mode == RADIO_READ)
   {
-    // char text[32] = "";
-    if (radio.read(radio_buffer_size, radio_buffer_size) == true)
-    {
-      Serial.println("read ok");
-    }
-    else
-    {
-      Serial.println("read failed");
-    }
-    Serial.println(radio_buffer_size);
+    radio.read(radio_buffer, radio_buffer_lenght);
   }
 }
 
 // RADIO BUFFER
-void getRadioBuffer(ubyte *buffer, int lenght, int offset_buffer, int offset_radio)
+void getRadioBufferEx(ubyte *buffer, int lenght, int offset_buffer, int offset_radio)
 {
   if (lenght > radio_buffer_lenght - offset_radio)
   {
@@ -89,7 +81,7 @@ void getRadioBuffer(ubyte *buffer, int lenght, int offset_buffer, int offset_rad
   }
 }
 
-void setRadioBuffer(ubyte *buffer, int lenght, int offset_buffer, int offset_radio)
+void setRadioBufferEx(ubyte *buffer, int lenght, int offset_buffer, int offset_radio)
 {
   if (lenght > radio_buffer_lenght - offset_radio)
   {
@@ -99,6 +91,16 @@ void setRadioBuffer(ubyte *buffer, int lenght, int offset_buffer, int offset_rad
   {
     radio_buffer[i + offset_radio] = buffer[i + offset_buffer];
   }
+}
+
+void getRadioBuffer(ubyte *buffer, int lenght)
+{
+  getRadioBufferEx(buffer, lenght, 0, 0);
+}
+
+void setRadioBuffer(ubyte *buffer, int lenght)
+{
+  setRadioBufferEx(buffer, lenght, 0, 0);
 }
 
 int getRaioBufferLenght()
@@ -117,11 +119,23 @@ void cleanRadioBuffer()
 int getRadioBufferInt(int offset)
 {
   int value;
-  getRadioBuffer(&value, sizeof(int), 0, offset);
+  getRadioBufferEx(RADIO_BUFFER(&value), sizeof(int), 0, offset);
   return value;
 }
 
 void setRadioBufferInt(int value, int offset)
 {
-  setRadioBuffer(&value, sizeof(int), 0, offset);
+  setRadioBufferEx(RADIO_BUFFER(&value), sizeof(int), 0, offset);
+}
+
+// RADIO UTILS
+void radioDelay(int mode){
+  if (mode == RADIO_READ)
+  {
+    delay(550);
+  }
+  else if (mode == RADIO_WRITE)
+  {
+    delay(500);
+  }
 }
