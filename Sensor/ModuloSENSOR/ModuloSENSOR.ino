@@ -24,12 +24,12 @@ void loop()
 {
   updateSensor(sensor);
   updateRadio(RADIO_WRITE);
-  
+
   ubyte buf[16] = "Hello World!!";
   setRadioBuffer(buf, sizeof(buf));
-  
-  Serial.print("Umidade do solo: "); //IMPRIME O TEXTO NO MONITOR SERIAL
-  Serial.print(sensor.valorLido); //IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
-  Serial.println("%"); //IMPRIME O CARACTERE NO MONITOR SERIAL
+
+  Serial.print("Umidade do solo: "); // IMPRIME O TEXTO NO MONITOR SERIAL
+  Serial.print(sensor.valorLido);    // IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
+  Serial.println("%");               // IMPRIME O CARACTERE NO MONITOR SERIAL
   radioDelay(RADIO_WRITE);
 }

@@ -129,7 +129,8 @@ void setRadioBufferInt(int value, int offset)
 }
 
 // RADIO UTILS
-void radioDelay(int mode){
+void radioDelay(int mode)
+{
   if (mode == RADIO_READ)
   {
     delay(550);

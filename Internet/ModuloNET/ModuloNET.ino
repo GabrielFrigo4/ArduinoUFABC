@@ -15,7 +15,7 @@ void setup()
 void loop()
 {
   updateRadio(RADIO_READ);
-  
+
   ubyte buf[32];
   getRadioBuffer(buf, sizeof(buf));
   Serial.println(RADIO_STRING(buf));
