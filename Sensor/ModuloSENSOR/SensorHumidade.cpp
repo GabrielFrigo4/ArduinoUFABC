@@ -3,7 +3,7 @@
 void initSensor(Sensor &sensor)
 {
   Serial.println("Lendo a umidade do solo..."); // IMPRIME O TEXTO NO MONITOR SERIAL
-  delay(2000);                                  // INTERVALO DE 2 SEGUNDOS
+  delay(2000); //INTERVALO DE 2 SEGUNDOS
 }
 
 void updateSensor(Sensor &sensor)
@@ -23,5 +23,4 @@ void updateSensor(Sensor &sensor)
   Serial.print("Umidade do solo: "); // IMPRIME O TEXTO NO MONITOR SERIAL
   Serial.print(sensor.valorLido);    // IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
   Serial.println("%");               // IMPRIME O CARACTERE NO MONITOR SERIAL
-  delay(1000);                       // INTERVALO DE 1 SEGUNDO
 }
