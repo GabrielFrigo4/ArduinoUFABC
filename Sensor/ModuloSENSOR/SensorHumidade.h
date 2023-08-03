@@ -1,5 +1,7 @@
+/* INCLUDE */
 #include <Arduino.h>
 
+/* STRUCT */
 struct Sensor
 {
   const int pinoSensor = A0;         // PINO UTILIZADO PELO SENSOR
@@ -11,5 +13,6 @@ struct Sensor
   int valorLido = 0; // VARIÁVEL QUE ARMAZENA O PERCENTUAL DE UMIDADE DO SOLO
 };
 
+/* CODE */
 void initSensor(Sensor &sensor);
 void updateSensor(Sensor &senso);
