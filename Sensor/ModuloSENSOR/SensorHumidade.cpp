@@ -1,3 +1,4 @@
+/* INCLUDE */
 #include "SensorHumidade.h"
 
 void initSensor(Sensor &sensor)
@@ -6,6 +7,7 @@ void initSensor(Sensor &sensor)
   delay(2000); //INTERVALO DE 2 SEGUNDOS
 }
 
+/* CODE */
 void updateSensor(Sensor &sensor)
 {
   sensor.valorLido = constrain(
