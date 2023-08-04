@@ -1,45 +1,21 @@
-#include <SPI.h>
-#include "nRF24L01.h"
-#include "RF24.h"
+/* =======================================================================================================================================
+https://www.robocore.net/tutoriais/programando-o-esp8266-pela-arduino-ide
+https://blog.zerokol.com/2018/08/nrf24l01-com-nodemcu.html
+https://howtomechatronics.com/tutorials/arduino/arduino-wireless-communication-nrf24l01-tutorial/
+https://forum.arduino.cc/t/nrf24l01-not-working-solved/697425
+https://forum.arduino.cc/t/simple-nrf24l01-2-4ghz-transceiver-demo/405123
+======================================================================================================================================= */
 
-// Instantiate RF24 class with CE and CSN values
-RF24 radio(2, 15);
-// Address to devices comunicate each other (same in both)
-const byte _address[6] = "00002";
-// A variable to hold some info
-boolean testInfo = false;
+#include "FireBase.h"
+#define WIFI_SSID "Wi-Fé"
+#define WIFI_PASSWORD "manoelgomes"
 
-void setup()
-{
-  // Setup serial output
-  Serial.begin(9600);
-  // Start RF
-  radio.begin();
-  // Setup the channel to work within, number 100
-  radio.setChannel(100);
-  // Open recept pipe
-  radio.openReadingPipe(1, _address[0]);
-  // Start to listen
-  radio.startListening();
+void setup() {
+  FireBase_Init(WIFI_SSID, WIFI_PASSWORD);
 }
 
-void loop()
-{
-  // Wait until some data
-  if (radio.available())
-  {
-    // Read payload, and check if it finished
-    radio.read(&testInfo, sizeof(testInfo));
-    // Manage info
-    if (testInfo)
-    {
-      Serial.println("We received positive!");
-    }
-    else
-    {
-      Serial.println("We received negative!");
-    }
-  }
-  // Wait a bit
-  delay(50);
+void loop() {
+  int umidade = Serial.parseInt();
+  Serial.println(umidade);
+  FireBase_SetInt("sensors/sensor_01/humidity", umidade);
 }
