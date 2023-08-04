@@ -4,11 +4,7 @@
 #define ADDRESS 0xFABC0BABACA0FEDE
 
 /* DATA */
-#if ESP8266
-RF24 radio(1, 2); // CE, CSN
-#else
 RF24 radio(7, 8); // CE, CSN
-#endif
 
 /* DEFINE */
 #define BUFFER_TO_REALBUFFER(x) x - 1
