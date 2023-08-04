@@ -4,6 +4,7 @@ https://github.com/mobizt/Firebase-ESP8266
 
 /* INCLUDE */
 #include "LibUFABC.h"
+#define TEST
 
 /* CODE */
 void setup()
@@ -16,8 +17,7 @@ void loop()
 {
   updateRadio(RADIO_READ);
 
-  ubyte buf[32];
-  getRadioBuffer(buf, sizeof(buf));
-  Serial.println(RADIO_STRING(buf));
+  int umidade = getRadioBufferInt();
+  Serial.println(umidade);
   radioDelay(RADIO_READ);
 }
