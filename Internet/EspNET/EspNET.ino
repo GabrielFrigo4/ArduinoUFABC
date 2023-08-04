@@ -10,11 +10,13 @@ https://forum.arduino.cc/t/simple-nrf24l01-2-4ghz-transceiver-demo/405123
 #define WIFI_SSID "Wi-Fé"
 #define WIFI_PASSWORD "manoelgomes"
 
-void setup() {
+void setup()
+{
   FireBase_Init(WIFI_SSID, WIFI_PASSWORD);
 }
 
-void loop() {
+void loop()
+{
   int umidade = Serial.parseInt();
   Serial.println(umidade);
   FireBase_SetInt("sensors/sensor_01/humidity", umidade);

@@ -11,10 +11,10 @@ RF24 radio(7, 8); // CE, CSN
 #endif
 
 /* DEFINE */
-#define BUFFER_TO_REALBUFFER(x) x-1
-#define REALBUFFER_TO_BUFFER(x) x+1
-#define BUFFERSIZE_TO_REALBUFFERSIZE(x) x+1
-#define REALBUFFERSIZE_TO_BUFFERSIZE(x) x-1
+#define BUFFER_TO_REALBUFFER(x) x - 1
+#define REALBUFFER_TO_BUFFER(x) x + 1
+#define BUFFERSIZE_TO_REALBUFFERSIZE(x) x + 1
+#define REALBUFFERSIZE_TO_BUFFERSIZE(x) x - 1
 #define BUFFER_INIT 0xFF
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 32
@@ -58,7 +58,7 @@ void initRadio(int mode)
 }
 
 void updateRadio(int mode)
-{  
+{
   if (mode == RADIO_WRITE)
   {
     radio.write(radio_buffer, BUFFER_SIZE);
@@ -68,11 +68,13 @@ void updateRadio(int mode)
   {
     ubyte buf[BUFFER_REAL_SIZE] = {0};
     radio.read(buf, BUFFER_REAL_SIZE);
-    if(buf[0] == BUFFER_INIT){
+    if (buf[0] == BUFFER_INIT)
+    {
       radioCopyMemory(buf, radio_buffer, BUFFER_REAL_SIZE, BUFFER_REAL_SIZE, 0, 0, BUFFER_REAL_SIZE);
       is_data_updated = true;
     }
-    else {
+    else
+    {
       is_data_updated = false;
     }
   }
@@ -122,13 +124,13 @@ void setRadioBufferInt(int value)
   setRadioBufferIntEx(value, 0);
 }
 
-
 int getRaioBufferLenght()
 {
   return BUFFER_SIZE;
 }
 
-bool getIsDataUpdated(){
+bool getIsDataUpdated()
+{
   return is_data_updated;
 }
 
