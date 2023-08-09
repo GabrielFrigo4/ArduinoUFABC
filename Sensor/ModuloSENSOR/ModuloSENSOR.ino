@@ -27,10 +27,7 @@ void loop()
 {
   updateSensor(sensor);
   updateRadio(RADIO_WRITE);
-
-  Serial.print("Umidade do solo: "); // IMPRIME O TEXTO NO MONITOR SERIAL
-  Serial.print(sensor.valorLido);    // IMPRIME NO MONITOR SERIAL O PERCENTUAL DE UMIDADE DO SOLO
-  Serial.println("%");               // IMPRIME O CARACTERE NO MONITOR SERIAL
+  
   setRadioBufferInt(sensor.valorLido);
 
   radioDelay(RADIO_WRITE);
