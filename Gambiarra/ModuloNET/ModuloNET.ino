@@ -1,37 +1,40 @@
 /* =======================================================================================================================================
-https://blogmasterwalkershop.com.br/arduino/como-usar-com-arduino-sensor-medidor-de-umidade-do-solo-higrometro
-https://br-arduino.org/2014/12/arduino-e-bateria-providencias-simples-para-reduzir-o-consumo.html
-https://eletronicaparaartistas.com.br/arduino-2-configuracao-do-arduino-nano/
+https://stackoverflow.com/questions/62363122/how-to-transfer-an-integer-from-an-arduino-to-another-arduino
+https://forum.arduino.cc/t/serial-communication-from-arduino-nano-to-esp8266/615666
+https://docs.arduino.cc/tutorials/nano-33-ble/i2c
+https://docs.arduino.cc/learn/communication/wire
+https://github.com/mobizt/Firebase-ESP8266
 ======================================================================================================================================= */
 
 /* INCLUDE */
 #include <Wire.h>
-#include "SensorHumidade.h"
 #define PIN_DATA 4
+#define SET_VALUE(x) x+1024
 
 /* DATA */
-Sensor sensor = {};
+int umidade;
 
 /* CODE */
 void setup()
 {
+  delay(2000);
   initWire(PIN_DATA);
-  initSensor(sensor);
+  Serial.begin(9600);
   Serial.println("INIT");
 }
 
 void loop()
 {
-  updateSensor(sensor);  
-  delay(256);
+  Serial.println(SET_VALUE(umidade));
+  delay(1536);
 }
 
 void initWire(int init){
   Wire.begin(init);
+  Wire.onReceive(receiveEvent);
 }
 
-void sendWire(int value){
-  Wire.beginTransmission(PIN_DATA);
-  Wire.write(sensor.valorLido);
-  Wire.endTransmission();
+void receiveEvent(int howMany)
+{
+  umidade = Wire.read();
 }
