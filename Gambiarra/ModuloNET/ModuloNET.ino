@@ -17,7 +17,7 @@ int umidade;
 /* CODE */
 void setup()
 {
-  delay(2000);
+  delay(4096);
   initWire(PIN_DATA);
   Serial.begin(9600);
   Serial.println("INIT");
@@ -26,7 +26,7 @@ void setup()
 void loop()
 {
   Serial.println(SET_VALUE(umidade));
-  delay(1536);
+  delay(512);
 }
 
 void initWire(int init){
