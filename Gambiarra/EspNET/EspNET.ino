@@ -12,21 +12,28 @@ https://blog.zerokol.com/2018/08/nrf24l01-com-nodemcu.html
 #define WIFI_PASSWORD "manuelgumes"
 #define GET_VALUE(x) x-1024
 
+/* DATA */
+int umidade;
+
 /* CODE */
 void setup()
 {
-  delay(2000);
+  delay(256);
   FireBase_Init(WIFI_SSID, WIFI_PASSWORD);
   Serial.println("INIT");
+  Serial.flush();
 }
 
 void loop()
 {
-  int umidade = Serial.parseInt();
-  if(umidade >= 1024){
-    umidade = GET_VALUE(umidade);
-    Serial.println(umidade);
-    FireBase_SetInt("sensors/sensor_01/humidity", umidade);
+  int _umidade = Serial.parseInt();
+  if(_umidade >= 1024){
+    _umidade = GET_VALUE(_umidade);
+    if(_umidade != umidade){
+      umidade = _umidade;
+      Serial.println(umidade);
+      FireBase_SetInt("sensors/sensor_01/humidity", umidade);
+    }
   }
-  delay(128);
+  delay(16);
 }
