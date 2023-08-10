@@ -4,7 +4,6 @@ https://github.com/mobizt/Firebase-ESP8266
 
 /* INCLUDE */
 #include "LibUFABC.h"
-#define TEST
 
 /* CODE */
 void setup()
