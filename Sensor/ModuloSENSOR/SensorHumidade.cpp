@@ -3,8 +3,8 @@
 
 void initSensor(Sensor &sensor)
 {
-  Serial.println("Lendo a umidade do solo..."); // IMPRIME O TEXTO NO MONITOR SERIAL
   delay(2000);                                  // INTERVALO DE 2 SEGUNDOS
+  Serial.println("Lendo a umidade do solo..."); // IMPRIME O TEXTO NO MONITOR SERIAL
 }
 
 /* CODE */

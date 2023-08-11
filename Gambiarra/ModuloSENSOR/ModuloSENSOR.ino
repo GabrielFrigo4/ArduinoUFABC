@@ -22,15 +22,18 @@ void setup()
 
 void loop()
 {
-  updateSensor(sensor);  
+  updateSensor(sensor);
   delay(256);
 }
 
-void initWire(int init){
+void initWire(int init)
+{
+  Serial.begin(9600);
   Wire.begin(init);
 }
 
-void sendWire(int value){
+void sendWire(int value)
+{
   Wire.beginTransmission(PIN_DATA);
   Wire.write(sensor.valorLido);
   Wire.endTransmission();

@@ -10,7 +10,7 @@ https://blog.zerokol.com/2018/08/nrf24l01-com-nodemcu.html
 #include "FireBase.h"
 #define WIFI_SSID "wif"
 #define WIFI_PASSWORD "manuelgumes"
-#define GET_VALUE(x) x-1024
+#define GET_VALUE(x) x - 1024
 
 /* DATA */
 int umidade;
@@ -27,9 +27,11 @@ void setup()
 void loop()
 {
   int _umidade = Serial.parseInt();
-  if(_umidade >= 1024){
+  if (_umidade >= 1024)
+  {
     _umidade = GET_VALUE(_umidade);
-    if(_umidade != umidade){
+    if (_umidade != umidade)
+    {
       umidade = _umidade;
       Serial.println(umidade);
       FireBase_SetInt("sensors/sensor_01/humidity", umidade);

@@ -9,7 +9,7 @@ https://github.com/mobizt/Firebase-ESP8266
 /* INCLUDE */
 #include <Wire.h>
 #define PIN_DATA 4
-#define SET_VALUE(x) x+1024
+#define SET_VALUE(x) x + 1024
 
 /* DATA */
 int umidade;
@@ -19,7 +19,6 @@ void setup()
 {
   delay(4096);
   initWire(PIN_DATA);
-  Serial.begin(9600);
   Serial.println("INIT");
 }
 
@@ -29,7 +28,9 @@ void loop()
   delay(512);
 }
 
-void initWire(int init){
+void initWire(int init)
+{
+  Serial.begin(9600);
   Wire.begin(init);
   Wire.onReceive(receiveEvent);
 }

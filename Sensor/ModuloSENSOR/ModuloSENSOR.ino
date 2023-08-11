@@ -27,7 +27,7 @@ void loop()
 {
   updateSensor(sensor);
   updateRadio(RADIO_WRITE);
-  
+
   setRadioBufferInt(sensor.valorLido);
 
   radioDelay(RADIO_WRITE);

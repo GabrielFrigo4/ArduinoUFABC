@@ -4,7 +4,6 @@
 void initSensor(Sensor &sensor)
 {
   delay(2000);                                  // INTERVALO DE 2 SEGUNDOS
-  Serial.begin(9600);
   Serial.println("Lendo a umidade do solo..."); // IMPRIME O TEXTO NO MONITOR SERIAL
 }
 
